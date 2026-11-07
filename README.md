@@ -13,7 +13,7 @@
 
 ### Custom Kernel for RMX3231 / RMX3235
 
-* Linux version: 4.14.270 & 5.4.147
+* Linux version: 4.14.270
 * Arch: armv8l/aarch64 (support 32/64bit userspace port & gsi rom)
 * SELinux: Both (Enforcing & Permissive)
 * FileSystem: EXT4 & EROFS
