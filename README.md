@@ -2,12 +2,11 @@
 * This repository contains only release archives specifically for the Realme C11 2021 and Narzo 50i with 4.14 kernel; archives with 5.4 kernel will be published later
 * OpenSourceURL: https://github.com/Ridhoardhiansyah7/bsp_realme_c11_2021_4_14/tree/4.14.270
 
-### Patched UBoot & TrustOS Overview
+### Patched UBoot & ~~TrustOS~~ Overview
 * Remove unlock warning on boot
 * Hold power and vol down = fastboot(bootloader)
 * Hold power and vol up = recovery mode
-* When a bootloop occurs due to an AVB issue, a kernel startup failure, an invalid DTBO structure, etc; = reboot into fastboot(bootloader) rather than letting the device remain in a bootloop.
-* The TrustOS & stock UBoot image has been patched to disable AVB, allowing unsigned custom boot,dtbo,vbmeta images to run even when the bootloader is locked.
+* The ~~TrustOS~~ & stock UBoot image has been patched to disable AVB, allowing unsigned custom boot,dtbo,vbmeta images to run even when the bootloader is locked.
 * You can read complete documentation in [this doc](https://github.com/Ridhoardhiansyah7/c11_2021_4.14_bsp_archive/blob/main/docs/bootloader_secure_part.md)
 
 ### Custom Kernel for RMX3231 / RMX3235 Overview
