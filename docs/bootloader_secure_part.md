@@ -20,18 +20,18 @@ LK sebagai bootloadernya dan pada perangkat dengan BSP yg lebih baru
   * Cari fungsi ```FUN_00003470```
   * Perhatikan bagian listing
   * ```asm                         
-        FUN_00003470                                    XREF[1]:     FUN_00005910:0000595c(c)  
+        					FUN_00003470                                    XREF[1]:     FUN_00005910:0000595c(c)  
         00003470 01 1c 00 53     uxtb       w1,w0
         00003474 3f cc 01 71     cmp        w1,#0x73 ; KEY_VOLUMEUP
-        00003478 80 00 80 52     mov        w0,#0x4 ; Fastboot mode
+        00003478 80 00 80 52     mov        w0,#0x4 ; CMD_FASTBOOT_MODE
         0000347c e0 00 00 54     b.eq       LAB_00003498
         00003480 3f 98 01 71     cmp        w1,#0x66 ; KEY_HOME,this device not have home key gpio, you can change it later
-        00003484 80 00 80 52     mov        w0,#0x4; Fastboot mode
+        00003484 80 00 80 52     mov        w0,#0x4; CMD_FASTBOOT_MODE
         00003488 80 00 00 54     b.eq       LAB_00003498
         0000348c 3f c8 01 71     cmp        w1,#0x72 ; KEY_VOLUMEDOWN
-        00003490 60 00 80 52     mov        w0,#0x3 ; Recovery mode
+        00003490 60 00 80 52     mov        w0,#0x3 ; CMD_RECOVERY_MODE
         00003494 e0 13 80 1a     csel       w0,wzr,w0,ne
-        LAB_00003498                                    XREF[2]:     0000347c(j), 00003488(j)  
+        					LAB_00003498                                    XREF[2]:     0000347c(j), 00003488(j)  
         00003498 c0 03 5f d6     ret
      ```
   * Kamu dapat mengetahui nilai KEY_VOLUMEUP, KEY_VOLUMEUP,KEY_HOME melalui [contoh code ini dan link ini](https://github.com/Ridhoardhiansyah7/bsp_bootloader_u-boot15_sharkl3/blob/main/include/dt-bindings/input/input.h#L114)
@@ -159,13 +159,13 @@ LK sebagai bootloadernya dan pada perangkat dengan BSP yg lebih baru
   	  
   	     eb0619c347731386b26d1a116a5705a437e3268d840d892d7fa83400ea89466f
   	  ```
-  	  * salin ```eb0619c347731386b26d1a116a5705a437e3268d840d892d7fa83400ea89466f```, dan gunakan code c, dibawah untuk patch uboot nya
-      * ```sh
+  	* salin ```eb0619c347731386b26d1a116a5705a437e3268d840d892d7fa83400ea89466f```, dan gunakan code c, dibawah untuk patch uboot nya
+  	* ```sh
   	     $ # [uboot_pubkey_patcher.exe] [stock_uboot_file_name] [result_patched_file_name] [stock uboot_log public key] [your vbmeta.pem public key]
          $ uboot_pubkey_patcher.exe uboot.bin u-boot-patched.bin 0c382136f01e2f9469d63b359d88cb36d52b7cfbd774936e6d80af88d0e3ed31 eb0619c347731386b26d1a116a5705a437e3268d840d892d7fa83400ea89466f
-        ```
-      * catatan  ```uboot_pubkey_patcher``` dicompile code C ini
-      * ```
+       ```
+  	* catatan  ```uboot_pubkey_patcher``` dicompile code C ini
+  	* ```
         #include <stdio.h>
         #include <stdlib.h>
         #include <stdint.h>
@@ -304,15 +304,15 @@ LK sebagai bootloadernya dan pada perangkat dengan BSP yg lebih baru
             free(new_bytes);
             return 0;
         }
-        ```
-      * setelah di compile dan dijalankan, akan menghasilkan output seperti ini
-      * ```log
+      ```
+  	* setelah di compile dan dijalankan, akan menghasilkan output seperti ini
+  	* ```log
           match at offset 0xcdcec
           patched offset 0xcdcec
           Wrote 1048576 bytes to "u-boot-patched.bin" (1 replacement).
-        ```
-      *  Selanjutnya silakan buat vbmeta custom berdasarkan vbmeta stock,kamu bisa menghapus dan mengganti chained verification, tetapi ganti .pem dan pubkey dengan kunci milik anda sendiri, kemudian lakukan pad; kamu bisa menggunakan [alat ini](https://github.com/TomKing062/vendor_sprd_proprietories-source_packimage/releases/tag/1.5)
-      * Langkah terakhir silakan flash ~~trustos,~~ uboot,dan vbmeta yg sudah di patch melalui fastbood/spd_dump, setelah itu hp kamu dapat menjalankan vbmeta custom dengan beberapa chain yg telah kamu hapus/modifikasi; silakan coba flash dtbo dan lainnya yg telah kamu hapus dari chain verification
+      ```
+  	*  Selanjutnya silakan buat vbmeta custom berdasarkan vbmeta stock,kamu bisa menghapus dan mengganti chained verification, tetapi ganti .pem dan pubkey dengan kunci milik anda sendiri, kemudian lakukan pad; kamu bisa menggunakan [alat ini](https://github.com/TomKing062/vendor_sprd_proprietories-source_packimage/releases/tag/1.5)
+  	* Langkah terakhir silakan flash ~~trustos,~~ uboot,dan vbmeta yg sudah di patch melalui fastbood/spd_dump, setelah itu hp kamu dapat menjalankan vbmeta custom dengan beberapa chain yg telah kamu hapus/modifikasi; silakan coba flash dtbo dan lainnya yg telah kamu hapus dari chain verification
      
 ### ~~Bagaimana TrustOS di patch~~
 * ~~TrustOS dipatch menggunakan [alat ini](https://github.com/TomKing062/action_spd_dump_it/blob/main/gen_tos-noavb.c)~~
